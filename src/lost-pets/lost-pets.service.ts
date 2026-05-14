@@ -58,6 +58,13 @@ export class LostPetsService {
         return result.generatedMaps[0] as LostPet;
     }
 
+    async findAll(): Promise<LostPet[]> {
+        return this.lostPetRepository.find({
+            where: { is_active: true },
+            order: { lost_date: 'DESC' },
+        });
+    }
+
     async findNearby(
         longitude: number,
         latitude: number,

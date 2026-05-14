@@ -46,7 +46,7 @@ export class FoundPetsService {
 
         const foundPet = result.generatedMaps[0] as FoundPet;
 
-        // 2. Search for lost pets within 500 meters
+        
         const nearbyLostPets = await this.lostPetsService.findNearby(
             dto.longitude,
             dto.latitude,
@@ -57,7 +57,7 @@ export class FoundPetsService {
             `Se encontraron ${nearbyLostPets.length} mascota(s) perdida(s) en un radio de 500m`,
         );
 
-        // 3. Send email notifications to each matching owner
+        
         for (const lostPet of nearbyLostPets) {
             try {
                 await this.mailService.sendMatchNotification(lostPet, foundPet);
@@ -75,5 +75,11 @@ export class FoundPetsService {
             foundPet,
             matchesFound: nearbyLostPets.length,
         };
+    }
+
+    async findAll(): Promise<FoundPet[]> {
+        return this.foundPetRepository.find({
+            order: { found_date: 'DESC' },
+        });
     }
 }
