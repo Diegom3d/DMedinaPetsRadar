@@ -7,4 +7,8 @@ export declare class LostPetsController {
         message: string;
         data: import("./entities/lost-pet.entity").LostPet;
     }>;
+    findAll(): Promise<{
+        message: string;
+        data: import("./entities/lost-pet.entity").LostPet[];
+    }>;
 }

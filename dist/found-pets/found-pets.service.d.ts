@@ -13,4 +13,5 @@ export declare class FoundPetsService {
         foundPet: FoundPet;
         matchesFound: number;
     }>;
+    findAll(): Promise<FoundPet[]>;
 }

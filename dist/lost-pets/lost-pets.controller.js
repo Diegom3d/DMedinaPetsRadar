@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LostPetsController = void 0;
 const common_1 = require("@nestjs/common");
+const cache_manager_1 = require("@nestjs/cache-manager");
 const lost_pets_service_1 = require("./lost-pets.service");
 const create_lost_pet_dto_1 = require("./dto/create-lost-pet.dto");
 let LostPetsController = class LostPetsController {
@@ -28,6 +29,13 @@ let LostPetsController = class LostPetsController {
             data: lostPet,
         };
     }
+    async findAll() {
+        const pets = await this.lostPetsService.findAll();
+        return {
+            message: 'Listado de mascotas perdidas activas recuperado exitosamente',
+            data: pets,
+        };
+    }
 };
 exports.LostPetsController = LostPetsController;
 __decorate([
@@ -37,6 +45,15 @@ __decorate([
     __metadata("design:paramtypes", [create_lost_pet_dto_1.CreateLostPetDto]),
     __metadata("design:returntype", Promise)
 ], LostPetsController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, common_1.UseInterceptors)(cache_manager_1.CacheInterceptor),
+    (0, cache_manager_1.CacheKey)('lost-pets-list'),
+    (0, cache_manager_1.CacheTTL)(60000),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], LostPetsController.prototype, "findAll", null);
 exports.LostPetsController = LostPetsController = __decorate([
     (0, common_1.Controller)('lost-pets'),
     __metadata("design:paramtypes", [lost_pets_service_1.LostPetsService])

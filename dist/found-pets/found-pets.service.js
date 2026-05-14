@@ -68,6 +68,11 @@ let FoundPetsService = FoundPetsService_1 = class FoundPetsService {
             matchesFound: nearbyLostPets.length,
         };
     }
+    async findAll() {
+        return this.foundPetRepository.find({
+            order: { found_date: 'DESC' },
+        });
+    }
 };
 exports.FoundPetsService = FoundPetsService;
 exports.FoundPetsService = FoundPetsService = FoundPetsService_1 = __decorate([

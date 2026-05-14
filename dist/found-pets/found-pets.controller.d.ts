@@ -9,4 +9,8 @@ export declare class FoundPetsController {
         matchesFound: number;
         notification: string;
     }>;
+    findAll(): Promise<{
+        message: string;
+        data: import("./entities/found-pet.entity").FoundPet[];
+    }>;
 }

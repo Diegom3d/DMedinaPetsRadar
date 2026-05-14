@@ -63,6 +63,12 @@ let LostPetsService = class LostPetsService {
             .execute();
         return result.generatedMaps[0];
     }
+    async findAll() {
+        return this.lostPetRepository.find({
+            where: { is_active: true },
+            order: { lost_date: 'DESC' },
+        });
+    }
     async findNearby(longitude, latitude, radiusMeters) {
         const results = await this.lostPetRepository
             .createQueryBuilder('lp')

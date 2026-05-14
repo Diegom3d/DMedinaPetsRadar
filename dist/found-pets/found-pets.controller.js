@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FoundPetsController = void 0;
 const common_1 = require("@nestjs/common");
+const cache_manager_1 = require("@nestjs/cache-manager");
 const found_pets_service_1 = require("./found-pets.service");
 const create_found_pet_dto_1 = require("./dto/create-found-pet.dto");
 let FoundPetsController = class FoundPetsController {
@@ -32,6 +33,13 @@ let FoundPetsController = class FoundPetsController {
                 : 'No se encontraron mascotas perdidas en un radio de 500 metros',
         };
     }
+    async findAll() {
+        const pets = await this.foundPetsService.findAll();
+        return {
+            message: 'Listado de mascotas encontradas recuperado exitosamente',
+            data: pets,
+        };
+    }
 };
 exports.FoundPetsController = FoundPetsController;
 __decorate([
@@ -41,6 +49,15 @@ __decorate([
     __metadata("design:paramtypes", [create_found_pet_dto_1.CreateFoundPetDto]),
     __metadata("design:returntype", Promise)
 ], FoundPetsController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, common_1.UseInterceptors)(cache_manager_1.CacheInterceptor),
+    (0, cache_manager_1.CacheKey)('found-pets-list'),
+    (0, cache_manager_1.CacheTTL)(60000),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], FoundPetsController.prototype, "findAll", null);
 exports.FoundPetsController = FoundPetsController = __decorate([
     (0, common_1.Controller)('found-pets'),
     __metadata("design:paramtypes", [found_pets_service_1.FoundPetsService])
