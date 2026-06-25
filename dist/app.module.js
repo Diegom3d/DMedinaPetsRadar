@@ -34,6 +34,7 @@ exports.AppModule = AppModule = __decorate([
                     username: configService.get('DB_USER'),
                     password: configService.get('DB_PASSWORD'),
                     database: configService.get('DB_NAME'),
+                    ssl: configService.get('DB_HOST') !== 'localhost' ? { rejectUnauthorized: false } : false,
                     autoLoadEntities: true,
                     synchronize: true,
                 }),

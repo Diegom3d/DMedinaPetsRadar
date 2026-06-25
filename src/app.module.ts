@@ -22,6 +22,7 @@ import { MailModule } from './mail/mail.module';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
+        ssl: configService.get<string>('DB_HOST') !== 'localhost' ? { rejectUnauthorized: false } : false,
         autoLoadEntities: true,
         synchronize: true,
       }),
