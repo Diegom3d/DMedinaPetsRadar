@@ -31,7 +31,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(process.env.PORT ?? 3000);
-  console.log(`🐾 PetRadar API corriendo en: http://localhost:${process.env.PORT ?? 3000}`);
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+  console.log(`🐾 PetRadar API corriendo en puerto: ${process.env.PORT ?? 3000}`);
 }
 bootstrap();
